@@ -6,10 +6,9 @@ def getYearData():
     
     """
     reads in the API request and uses f-strings to adjust the start date and end date for collecting necessary data.
-
     the output should be a pandas dataframe containing both the date (format YYYY-MM-DD) and the daily avg temp in Fahrenheit
-
     dateStart and dateEnd are adjusted after each execution of the for loop due and are re-inserted into the api key parameters
+    Might need to update API_url to include API_token depending on how class is being handled
     """
     
     API_url = 'http://api.weatherapi.com/v1/history.json'
