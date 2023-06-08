@@ -1,5 +1,6 @@
 # Import necessary libraries 
-import pandas as pd 
+import pandas as pd
+from api_reader import getYearData
 
 # Create and define the class
 class Weather_Viz:
@@ -15,3 +16,7 @@ class Weather_Viz:
         
         #Create empty month data frame as instance variable 
         self.monthly_df = pd.DataFrame()
+        
+    def yearData(self, API_url):
+        self.data_frame = getYearData(API_url)
+
