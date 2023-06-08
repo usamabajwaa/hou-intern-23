@@ -1,12 +1,14 @@
 # Import necessary libraries 
 import pandas as pd 
-import requests 
 
 # Create and define the class
-class Weather_Viz: 
-    def __init__(self, API_url, API_token):
-        # Initiate the API_url and API_token
+class Weather_Viz:
+
+    #Initialize class with method to define instance variables
+    def __init__(self, API_url):
+
+        # Assign API_url to instance variable 
         self.API_url = API_url
-        self.API_token = API_token
-        # Fetch the data and store it in the DF propetry
-        self.data_frame = self.get_data()
+
+        # Create empty dataframe as instance variable 
+        self.data_frame = pd.DataFrame()
