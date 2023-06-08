@@ -12,3 +12,6 @@ class Weather_Viz:
 
         # Create empty dataframe as instance variable 
         self.data_frame = pd.DataFrame()
+        
+        #Create empty month data frame as instance variable 
+        self.monthly_df = pd.DataFrame()
