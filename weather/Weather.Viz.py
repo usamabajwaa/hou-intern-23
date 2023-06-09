@@ -1,4 +1,3 @@
-# Import necessary libraries 
 import pandas as pd
 from api_reader import getYearData
 
@@ -19,4 +18,3 @@ class Weather_Viz:
         
     def yearData(self, API_url):
         self.data_frame = getYearData(API_url)
-
