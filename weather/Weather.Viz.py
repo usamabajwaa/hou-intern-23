@@ -1,7 +1,6 @@
 from matplotlib import  dates, pyplot as plt
 import pandas as pd
 from api_reader import getYearData
-import matplotlib.pyplot as plt
 
 # Create and define the class
 class WeatherViz:
@@ -23,7 +22,7 @@ class WeatherViz:
 
     # Create function with 'self' parameter referring to instance of class
 
-    def plotData(self): 
+    def plotLast30Days(self): 
 
         # Check if the dataframe is empty
         
