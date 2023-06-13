@@ -3,7 +3,7 @@ import pandas as pd
 from api_reader import getYearData
 
 # Create and define the class
-class Weather_Viz:
+class WeatherViz:
 
     #Initialize class with method to define instance variables
     def __init__(self, API_url):
