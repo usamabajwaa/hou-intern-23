@@ -60,7 +60,3 @@ def yearVizData(yearData):
     plt.grid(which = 'both', axis='y')
     plt.gcf().autofmt_xdate()
     plt.show()
-
-test = WeatherViz('http://api.weatherapi.com/v1/history.json')
-test.yearData(test.API_url)
-testGraph = yearVizData(test)
