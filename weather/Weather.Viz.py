@@ -20,13 +20,13 @@ class WeatherViz:
     def yearData(self, API_url):
         self.data_frame = getYearData(API_url)
 
-def yearVizData(yearData):
+def yearVizData(yearData: pd.DataFrame):
 
     #Sets up and autoscales the window to a larger size for readbabilit
     fig = plt.figure(figsize=(20, 7), dpi=100)
     ax = fig.subplots()
     
-    ax.plot(yearData.data_frame['date'], yearData.data_frame['avgtemp_f'])
+    ax.plot(yearData['date'], yearData['avgtemp_f'])
     
     #Sets X-axis increments
     ax.xaxis.set_major_locator(dates.DayLocator(interval=14)) #Sets major tick marks on x-axis to once every month
@@ -39,3 +39,7 @@ def yearVizData(yearData):
     plt.grid(which = 'both', axis='y')
     plt.gcf().autofmt_xdate()
     plt.show()
+    
+testClass = WeatherViz('http://api.weatherapi.com/v1/history.json')
+testClass.yearData('http://api.weatherapi.com/v1/history.json')
+yearVizData(testClass.data_frame)
