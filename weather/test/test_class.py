@@ -1,7 +1,4 @@
-import sys
-# sys.path.insert(1,'/Users/brandon.eigenschenk/intern23/hou-intern-23/weather/source')
-# from source.weather_visualization import WeatherViz
-from ..src.weather_visualization import WeatherViz
+from weather_visualization import WeatherViz
 import pandas as pd
 import matplotlib.pyplot as plt
 ################################
