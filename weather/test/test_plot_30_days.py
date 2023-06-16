@@ -21,5 +21,3 @@ def test_plot_last_30_days_insufficient_data():
         weather_viz.plotLast30Days()
     # Assert the error message
     assert str(excinfo.value) == 'There is not enough data to display the last 30 days'
-
-    
