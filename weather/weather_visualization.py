@@ -145,7 +145,31 @@ class WeatherViz:
         # Display the chart
         plt.grid()
         plt.show()
-        
+    
+    def play_biweekly_averages(self, yearData: pd.DataFrame):
+        last_365_days = yearData.tail(365)
+        parameters = ['date', 'month', 'avgtemp_f']
+        monthly_df = pd.DataFrame(columns=parameters)
+        biweekly_dates=[]
+        print(biweekly_dates)
+        print(last_365_days)
+        print(monthly_df)
+        print(weather_viz.yearData('http://api.weatherapi.com/v1/history.json'))
+
+
+        for index, row in last_365_days.iterrows():
+            if index % 14 == 0:
+                biweekly_dates.append(row['date'])
+               
+
+
+        self.biweekly_df.tail= yearData.groupby('Week_Number')('Avg_Temp').transform('average')
+        print("Play biweekly averages", biweekly_dates)
+
+       
+    
+
+
 if __name__== "__main__":
     weather_viz = WeatherViz('http://api.weatherapi.com/v1/history.json')
     weather_viz.yearData('http://api.weatherapi.com/v1/history.json')
@@ -153,3 +177,4 @@ if __name__== "__main__":
     weather_viz.yearVizData(weather_viz.data_frame)
     weather_viz.plotLast30Days()
     weather_viz.plotAverageMonthlyTemperature(weather_viz.monthly_df)
+    weather_viz.play_biweekly_averages(weather_viz.data_frame)

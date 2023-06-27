@@ -23,4 +23,5 @@ def test_yearVizData():
        # test_plt.show()
        #Asserts the plt is not empty after being passed to yearVizData func
        assert test_plt != None
+       
 
