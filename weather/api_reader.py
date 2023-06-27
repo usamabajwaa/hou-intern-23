@@ -28,7 +28,7 @@ def getYearData(API_url):
     df = pd.DataFrame(columns=parameters)
 
     for i in range(0, 13):
-        result = requests.get(f'{API_url}?key=b5d1d68681064ffcb53173100230706&q=Houston&dt={dateStart}&end_dt={dateEnd}')
+        result = requests.get(f'{API_url}?key=ad094c6210c94bca96f223321232606&q=Houston&dt={dateStart}&end_dt={dateEnd}')
         result_dict = dict(result.json())
         if result_dict == None: break
 
