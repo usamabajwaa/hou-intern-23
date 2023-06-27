@@ -146,28 +146,6 @@ class WeatherViz:
         plt.grid()
         plt.show()
 
-import pandas as pd
-def calculateQuarterlyAverages(self, df: pd.DataFrame):
-        """
-        Calculates quarterly average weather given datafram of last 365 days
-        
-        Args: pandas DataFrame containg daily temp data
-
-         Returns:
-     New pandas DataFrame called quarterly_df with colums month and avgtemp_f which has the quarterly
-     average temps"""
-
-        parameters = ['date', 'month', 'avgtemp_f']
-        quarterly_df = pd.DataFrame(columns=parameters)
-        quarterly_df['date'],quarterly_df['avgtemp_f'] = df['date'],df['avgtemp_f']
-
-
-        quarterly_df['date'] = pd.to_datetime(quarterly_df['date'], format='%Y-%m-%d')
-        quarterly_df['month'] = quarterly_df['date'].dt.month
-        quarterly_df = quarterly_df.groupby(['month'])['avgtemp_f'].mean().reset_index()
-        quarterly_df.rename(columns={'avgtemp_f': 'avg_temp'}, inplace=True)
-        return quarterly_df
-
 
 if __name__== "__main__":
     weather_viz = WeatherViz('http://api.weatherapi.com/v1/history.json')
