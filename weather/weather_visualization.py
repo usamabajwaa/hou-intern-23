@@ -9,7 +9,7 @@ from sqlalchemy import create_engine
 
 class Connector:
         
-    def populateDataFrame(self):
+    def db_connector(self):
         """generic SQL connector that queries a db and saves result to a dataframe
         This function populates the Connector class database dataframe with whatever parameters are passed to the engine function
         and also whatever the query provided is. Please note that you need to use a .env file and assign the correct values in 
@@ -41,7 +41,7 @@ class Connector:
         return db_df
     
     def __init__(self):
-        self.db_df = self.populateDataFrame()
+        self.db_df = self.db_connector()
         
 
 # Create and define the class
