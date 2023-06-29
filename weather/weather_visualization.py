@@ -1,8 +1,7 @@
 from matplotlib import  dates, pyplot as plt
 import pandas as pd
 from api_reader import getYearData
-from datetime import datetime 
-
+    
 # Create and define the class
 class WeatherViz:
 
@@ -22,10 +21,7 @@ class WeatherViz:
     def yearData(self, API_url):
         self.data_frame = getYearData(API_url)
 
-    # Create function with 'self' parameter referring to instance of class
-
     def plotLast30Days(self): 
-
         # Check if the dataframe is empty
         
         if self.data_frame.empty: 
@@ -109,8 +105,8 @@ class WeatherViz:
         plt.grid(which = 'both', axis='x')
         plt.grid(which = 'both', axis='y')
         plt.gcf().autofmt_xdate()
+        
         return plt
-        # plt.show()
         
         
     #plots average monthly temp
@@ -169,13 +165,3 @@ def calculateWeeklyAverages(df: pd.DataFrame):
     weekly_df.rename(columns={'avgtemp_f': 'avg_temp'}, inplace=True)
 
     return weekly_df 
-        
-if __name__== "__main__":
-    weather_viz = WeatherViz('http://api.weatherapi.com/v1/history.json')
-    weather_viz.yearData('http://api.weatherapi.com/v1/history.json')
-    weather_viz.monthly_df = weather_viz.calculateMonthlyAverages(weather_viz.data_frame)
-    weather_viz.yearVizData(weather_viz.data_frame)
-    # weather_viz.plotLast30Days()
-    # weather_viz.plotAverageMonthlyTemperature(weather_viz.monthly_df)
-    weather_viz.weekly_df = calculateWeeklyAverages (weather_viz.data_frame)  
-    print(weather_viz.weekly_df) 

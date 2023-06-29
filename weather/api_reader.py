@@ -31,7 +31,7 @@ def getYearData(API_url):
         result = requests.get(f'{API_url}?key=ad094c6210c94bca96f223321232606&q=Houston&dt={dateStart}&end_dt={dateEnd}')
         result_dict = dict(result.json())
         if result_dict == None: break
-
+        
         #For loop checks the dictionary for the necessary values and stores them into a new_row dataframe, it is then
         #transposed and concat'd with the pre-existing dataframe
         for i in range(len(result_dict['forecast']['forecastday'])):
@@ -45,5 +45,4 @@ def getYearData(API_url):
         dateEnd = dateStart + timedelta(days=30)
 
         if dateEnd >= datetime.date(datetime.now()): dateEnd = datetime.date(datetime.now())
-        
     return df
