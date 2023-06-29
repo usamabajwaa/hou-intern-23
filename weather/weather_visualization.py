@@ -13,6 +13,7 @@ class WeatherViz:
 
         # Create empty dataframe as instance variable 
         self.data_frame = pd.DataFrame()
+        self.weekly_df = pd.DataFrame() 
         
         #Create empty month data frame as instance variable 
         self.monthly_df = pd.DataFrame()
@@ -141,3 +142,26 @@ class WeatherViz:
         # Display the chart
         plt.grid()
         plt.show()
+
+def calculateWeeklyAverages(df: pd.DataFrame):
+    """
+    Calculates weekly average weather given datafram of last 365 days
+    
+    Args: pandas DataFrame containg daily temp data
+    
+    Returns:
+    New pandas DataFrame called weekly_df with colums week and avgtemp_f which has the weekly
+    average temps"""
+    parameters = ['date', 'week', 'avgtemp_f']
+    weekly_df = pd.DataFrame(columns=parameters)
+    weekly_df['date'],weekly_df['avgtemp_f'] = df['date'],df['avgtemp_f']
+    
+    # convert 'date'column to datetime format
+    weekly_df['date'] = pd.to_datetime(weekly_df['date'], format='%Y-%m-%d')
+    # Extract week and avg temp data 
+    weekly_df['week'] = weekly_df['date'].dt.isocalendar().week  
+    weekly_df = weekly_df.groupby(['week'])['avgtemp_f'].mean().reset_index()
+    #rename columns
+    weekly_df.rename(columns={'avgtemp_f': 'avg_temp'}, inplace=True)
+
+    return weekly_df 
