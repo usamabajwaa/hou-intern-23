@@ -143,25 +143,60 @@ class WeatherViz:
         plt.grid()
         plt.show()
 
-def calculateWeeklyAverages(df: pd.DataFrame):
-    """
-    Calculates weekly average weather given datafram of last 365 days
-    
-    Args: pandas DataFrame containg daily temp data
-    
-    Returns:
-    New pandas DataFrame called weekly_df with colums week and avgtemp_f which has the weekly
-    average temps"""
-    parameters = ['date', 'week', 'avgtemp_f']
-    weekly_df = pd.DataFrame(columns=parameters)
-    weekly_df['date'],weekly_df['avgtemp_f'] = df['date'],df['avgtemp_f']
-    
-    # convert 'date'column to datetime format
-    weekly_df['date'] = pd.to_datetime(weekly_df['date'], format='%Y-%m-%d')
-    # Extract week and avg temp data 
-    weekly_df['week'] = weekly_df['date'].dt.isocalendar().week  
-    weekly_df = weekly_df.groupby(['week'])['avgtemp_f'].mean().reset_index()
-    #rename columns
-    weekly_df.rename(columns={'avgtemp_f': 'avg_temp'}, inplace=True)
+    def calculateWeeklyAverages(self, df: pd.DataFrame):
+        """
+        Calculates weekly average weather given datafram of last 365 days
+        
+        Args: pandas DataFrame containg daily temp data
+        
+        Returns:
+        New pandas DataFrame called weekly_df with colums week and avgtemp_f which has the weekly
+        average temps"""
+        parameters = ['date', 'week', 'avgtemp_f']
+        weekly_df = pd.DataFrame(columns=parameters)
+        weekly_df['date'],weekly_df['avgtemp_f'] = df['date'],df['avgtemp_f']
+        
+        # convert 'date'column to datetime format
+        weekly_df['date'] = pd.to_datetime(weekly_df['date'], format='%Y-%m-%d')
+        # Extract week and avg temp data 
+        weekly_df['week'] = weekly_df['date'].dt.isocalendar().week   
+        weekly_df = weekly_df.groupby(['week'])['avgtemp_f'].mean().reset_index()
+        #rename columns
+        weekly_df.rename(columns={'avgtemp_f': 'avg_temp'}, inplace=True)
+        return weekly_df 
 
-    return weekly_df 
+    #plots average weekly temp
+    def plotAverageWeeklyTemperature(self, weekly_df: pd.DataFrame):
+        """
+        Plots the average weekly temperature for the last year using a line chart.
+
+        Args:
+            weekly_df: A pandas DataFrame containing the average weekly temperatures.
+
+        Returns:
+            None (displays the line chart using matplotlib).
+        """
+        # Extract week and average temperature data
+        weeks = weekly_df['week'] 
+        avg_temp = weekly_df['avg_temp']
+
+        # Set up the figure and axes
+        fig, ax = plt.subplots()
+
+        # Plot the line chart
+        ax.plot(weeks, avg_temp, marker='o', linestyle='-', color='red')
+
+        # Set labels and title
+        ax.set_xlabel('Week')
+        ax.set_ylabel('Average Temperature °F')
+        ax.set_title('Downtown Houston\'s Average Weekly Temperature for 2023')
+
+        # Set x-axis ticks and labels
+        # ax.set_xticks(weeks)
+        # ax.set_xticklabels(['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'])
+        ax.xaxis.set_major_locator(dates.DayLocator(interval=14)) #Sets major tick marks on x-axis to once every month
+        ax.xaxis.set_minor_locator(dates.DayLocator()) #Sets minor tick marks on x-axis to once every week
+
+        # Display the chart
+        plt.grid()
+        plt.show()

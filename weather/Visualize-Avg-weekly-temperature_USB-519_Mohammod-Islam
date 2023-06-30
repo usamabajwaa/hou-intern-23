@@ -1,0 +1,40 @@
+from matplotlib import  dates, pyplot as plt
+import pandas as pd
+from api_reader import getYearData
+from datetime import datetime 
+
+#plots average weekly temp
+    def plotAverageWeeklyTemperature(self, weekly_df: pd.DataFrame):
+        """
+        Plots the average weekly temperature for the last year using a line chart.
+
+        Args:
+            weekly_df: A pandas DataFrame containing the average weekly temperatures.
+
+        Returns:
+            None (displays the line chart using matplotlib).
+        """
+        # Extract week and average temperature data
+        weeks = weekly_df['week'] 
+        avg_temp = weekly_df['avg_temp']
+    
+        # Set up the figure and axes
+        fig, ax = plt.subplots()
+    
+        # Plot the line chart
+        ax.plot(weeks, avg_temp, marker='o', linestyle='-', color='red')
+    
+        # Set labels and title
+        ax.set_xlabel('Week')
+        ax.set_ylabel('Average Temperature °F')
+        ax.set_title('Downtown Houston\'s Average Weekly Temperature for 2023')
+    
+        # Set x-axis ticks and labels
+        # ax.set_xticks(weeks)
+        # ax.set_xticklabels(['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'])
+        ax.xaxis.set_major_locator(dates.DayLocator(interval=14)) #Sets major tick marks on x-axis to once every month
+        ax.xaxis.set_minor_locator(dates.DayLocator()) #Sets minor tick marks on x-axis to once every week
+
+        # Display the chart
+        plt.grid()
+        plt.show()
