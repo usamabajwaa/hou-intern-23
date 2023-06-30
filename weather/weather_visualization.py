@@ -46,7 +46,7 @@ class WeatherViz:
         """ After storage, convert the 'date' column from string format to datetime format
         for plotting on x-axis
         """
-        last_30_days_df['date'] = pd.to_datetime(last_30_days_df['date'])
+        # last_30_days_df['date'] = pd.to_datetime(last_30_days_df['date'])
 
         # Sort the dataframe by 'date' so the plot displays data in chronological order
         last_30_days_df = last_30_days_df.sort_values(by='date')
@@ -146,29 +146,42 @@ class WeatherViz:
         plt.grid()
         plt.show()
     
-    def play_biweekly_averages(self, yearData: pd.DataFrame):
-        last_365_days = yearData.tail(365)
+    def play_biweekly_averages(self, df: pd.DataFrame):
+        # last_365_days = df.tail(365)
         parameters = ['date', 'month', 'avgtemp_f']
-        monthly_df = pd.DataFrame(columns=parameters)
-        biweekly_dates=[]
-        print(biweekly_dates)
-        print(last_365_days)
-        print(monthly_df)
-        print(weather_viz.yearData('http://api.weatherapi.com/v1/history.json'))
+        biweekly_df = pd.DataFrame(columns=parameters)
+        biweekly_df['date'],biweekly_df['avgtemp_f'] = df['date'],df['avgtemp_f']
+        biweekly_df['date'] = pd.to_datetime(biweekly_df['date'], format='%Y-%m-%d')
+        biweekly_df['month'] = biweekly_df['date'].dt.month
+        biweekly_df = biweekly_df.groupby(['month'])['avgtemp_f'].mean().reset_index()
+        # biweekly_df['biweekly_interval'] = biweekly_df['date'].resample('2W').mean().reset_index()['date']
+        # biweekly_df = biweekly_df.groupby(biweekly_df['biweekly_interval'].dt.month)['avgtemp_f'].mean().reset_index()
+        biweekly_df.rename(columns={'avgtemp_f': 'avg_temp'}, inplace=True)
 
+        print("This is the biweekly averages")
+        print(biweekly_df)
 
-        for index, row in last_365_days.iterrows():
-            if index % 14 == 0:
-                biweekly_dates.append(row['date'])
-               
-
-
-        self.biweekly_df.tail= yearData.groupby('Week_Number')('Avg_Temp').transform('average')
-        print("Play biweekly averages", biweekly_dates)
-
-       
+        return biweekly_df
     
+    def biweeklyVizData(self, biweeklyData: pd.DataFrame):
+    #Sets up and autoscales the window to a larger size for readbabilit
+        fig = plt.figure(figsize=(20, 7), dpi=100)
+        ax = fig.subplots()
+    
+        ax.plot(biweeklyData['date'], biweeklyData['avgtemp_f'])
+    
+        #Sets X-axis increments
+        ax.xaxis.set_major_locator(dates.DayLocator(interval=14)) #Sets major tick marks on x-axis to once every month
+        ax.xaxis.set_minor_locator(dates.DayLocator(2)) #Sets minor tick marks on x-axis to once every week
+        
+        ax.set(xlabel = 'Date', ylabel = 'Avg Temp (°F)', title = 'Historical Data Showing Downtown Houston\'s Biweekly Average Temperature (°F) for Past 365 Days')
 
+        #Displays grid and formats x-axis test
+        plt.grid(which = 'both', axis='x')
+        plt.grid(which = 'both', axis='y')
+        plt.gcf().autofmt_xdate()
+        
+        return plt.show()
 
 if __name__== "__main__":
     weather_viz = WeatherViz('http://api.weatherapi.com/v1/history.json')
@@ -178,3 +191,4 @@ if __name__== "__main__":
     weather_viz.plotLast30Days()
     weather_viz.plotAverageMonthlyTemperature(weather_viz.monthly_df)
     weather_viz.play_biweekly_averages(weather_viz.data_frame)
+    biweekly_data = weather_viz.play_biweekly_averages(weather_viz.data_frame) 
