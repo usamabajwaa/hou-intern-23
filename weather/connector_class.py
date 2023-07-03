@@ -37,4 +37,19 @@ class Connector:
     
     def __init__(self):
         self.db_df = self.db_connector()
+
+test_df = Connector()
+
+class Transformers: 
+    def __init__(self): 
+        self.data = []
+
+    def drop_unused_columns(df: pd.DataFrame ) -> pd.DataFrame:
+
+        df = df[['Creator Name', 'Desk Name', 'Start (UTC)', 'Canceled At (UTC)']]
+
+        print(df)
+
+    drop_unused_columns(test_df.db_df)
+
         
