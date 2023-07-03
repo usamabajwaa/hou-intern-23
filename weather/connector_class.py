@@ -42,14 +42,18 @@ test_df = Connector()
 
 class Transformers: 
     def __init__(self): 
-        self.data = []
+        self.data = pd.DataFrame
 
-    def drop_unused_columns(df: pd.DataFrame ) -> pd.DataFrame:
+    def drop_unused_columns(self, df: pd.DataFrame ) -> pd.DataFrame:
 
         df = df[['Creator Name', 'Desk Name', 'Start (UTC)', 'Canceled At (UTC)']]
 
-        print(df)
-
-    drop_unused_columns(test_df.db_df)
+        return df
+    
+    def group_data(self, df: pd.DataFrame) -> pd.DataFrame:
+        
+        df  = df.groupby(['Start (UTC)', 'Creator Name'])
+        
+        return df
 
         
