@@ -21,7 +21,7 @@ if __name__== "__main__":
 
     connector_df = Connector(use_csv = use_csv, verbose=verbose)
     if verbose:
-        print(connector_df)
+        print(connector_df.db_df)
 
     if verbose:
         print("Transforming data")
