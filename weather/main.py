@@ -38,3 +38,5 @@ if __name__== "__main__":
     weather_viz.yearVizData(weather_viz.data_frame)
     weather_viz.plotLast30Days()
     weather_viz.plotAverageMonthlyTemperature(weather_viz.monthly_df)
+    print(weather_viz.data_frame)
+    
