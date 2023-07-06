@@ -60,16 +60,3 @@ class Connector:
             self.db_df = pd.read_csv("data/robin.csv")
 
 
-class Transformers:
-
-    def drop_unused_columns(df: pd.DataFrame) -> pd.DataFrame:
-
-        df = df[["Creator Name", "Desk Name", "Start (UTC)", "Canceled At (UTC)"]]
-
-        return df
-
-    def group_data(df: pd.DataFrame) -> pd.DataFrame:
-
-        df = df.groupby(["Start (UTC)", "Creator Name"])
-
-        return df

@@ -43,7 +43,8 @@ class WeatherViz:
         """ After storage, convert the 'date' column from string format to datetime format
         for plotting on x-axis
         """
-        last_30_days_df['date'] = pd.to_datetime(last_30_days_df['date'])
+        last_30_days_df.loc[:, 'date'] = pd.to_datetime(last_30_days_df['date'])
+        #last_30_days_df['date'] = pd.to_datetime(last_30_days_df['date'])
 
         # Sort the dataframe by 'date' so the plot displays data in chronological order
         last_30_days_df = last_30_days_df.sort_values(by='date')
