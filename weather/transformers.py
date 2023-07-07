@@ -3,6 +3,8 @@ from dotenv import load_dotenv
 import pandas as pd
 import numpy as np
 import config
+
+
 class Transformers:
 
     def drop_unused_columns(df: pd.DataFrame) -> pd.DataFrame:
@@ -21,6 +23,9 @@ class Transformers:
         #groupby 'date' and organize 'creator' column into date subgroups
         df = df.groupby('date')['creator']
         
+
+        df = df.sort_values(["Start (UTC)", "Creator Name"])
+
         return df
     
     def add_missing_days(df: pd.DataFrame) -> pd.DataFrame:
@@ -56,4 +61,29 @@ class Transformers:
         df['water_usage'] = df.bookings_count * config.avg_water_consumption
         
         return df
+    
+    def add_commute_emissions(df: pd.DataFrame) -> pd.DataFrame:
+
+        # Copy df to avoid SettingWithCopyWarning
+        df = df.copy()
+
+        # Count 'Creator Name' entries to get a number of employees 
+        num_employees = df.groupby(df['Start (UTC)'].dt.date)['Creator Name'].nunique()
+
+        # Calculate total commute emissions emissions for each day
+        commute_emissions = num_employees * config.avg_commute_score
+
+        # Add new column to df
+        df['commute_emissions'] = df['Start (UTC)'].dt.date.map(commute_emissions)
+        
+        return df
+    
+
+        
+    
+
+    
+    
+
+    
         
