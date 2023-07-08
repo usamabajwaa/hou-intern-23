@@ -2,7 +2,7 @@
 
 # Average daily water consumption per employee in gallons 
 
-avg_water_constumption = 13.2
+avg_water_consumption = 13.2
 
 # Average daily electricity consimption per employee in kWh
 
