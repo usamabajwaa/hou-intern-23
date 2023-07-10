@@ -14,15 +14,6 @@ class Transformers:
         return df
 
     def group_data(df: pd.DataFrame) -> pd.DataFrame:
-        #renaming the columns 
-        df = df.rename(columns={'Start (UTC)': 'date', 'Creator Name': 'creator'})
-        
-        #groupby works by exact matching, so we need to strip the timestamp
-        # df['date'] = df['date'].dt.date
-        
-        #groupby 'date' and organize 'creator' column into date subgroups
-        df = df.groupby('date')['creator']
-        
 
         df = df.sort_values(["Start (UTC)", "Creator Name"])
 
