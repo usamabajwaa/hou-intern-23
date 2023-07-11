@@ -30,14 +30,27 @@ if __name__== "__main__":
         print("Transforming data")
 
     transformer_df = Transformers.drop_unused_columns(connector_df.db_df)
-    transformer_df = Transformers.add_commute_emissions(transformer_df)
+    transformer_df = Transformers.add_missing_days(transformer_df)
     transformer_df = Transformers.group_data(transformer_df)
-    
+    transformer_df = Transformers.group_bookings_data(transformer_df)
+    transformer_df = Transformers.add_commute_emissions(transformer_df)
+    transformer_df = Transformers.add_water_column(transformer_df)
+
+    print(transformer_df)
+
     if verbose: 
         print(transformer_df)
 
     if verbose:
         print("Visualzing weather data")
+
+
+
+    
+
+
+
+    
 
         
     #weather_viz = WeatherViz('http://api.weatherapi.com/v1/history.json')
