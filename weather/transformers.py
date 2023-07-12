@@ -21,7 +21,7 @@ class Transformers:
             df = df.rename(columns={'Start (UTC)': 'date', 'Creator Name': 'creator'})
             df.loc[df['creator'].notnull(), 'creator'] = 1
             df.loc[df['creator'].isnull(), 'creator'] = 0
-            # df.loc[df['creator'].isnull(), 'creator'] = 0
+            
             #groupby 'date' and organize 'creator' column into date subgroups
             df = df.groupby('date')['creator']
             return df

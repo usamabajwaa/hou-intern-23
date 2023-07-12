@@ -2,8 +2,6 @@ from weather_visualization import WeatherViz
 from connector_class import Connector
 from transformers import Transformers
 import argparse
-import config
-
 
 if __name__== "__main__":
 
