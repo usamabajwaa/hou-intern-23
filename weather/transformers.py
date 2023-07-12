@@ -89,3 +89,52 @@ class Transformers:
         
         plt.show()
         
+    def commute_score_viz(df: pd.DataFrame):
+
+        # Set up window
+        fig = plt.figure(figsize=(25, 5), dpi=100)
+        ax = fig.subplots()
+    
+        # Plot data
+        ax.plot(df['date'], df['commute_emissions'], marker='o')
+        
+        # Set labels
+        xaxis_labels = list(np.arange(df['date'].min(), df['date'].max()+timedelta(days=1), 3))
+        xaxis_labels.append(df['date'].max())
+        
+        # Set x titles
+        ax.set_xticks(xaxis_labels)
+        
+
+        # Title the labels 
+        ax.set(xlabel = 'Date', ylabel = 'Carbon Emissions(kg)', title = 'Commute Emissions Score For Past 90 Days')
+        ax.xaxis.set_minor_locator(AutoMinorLocator(3))
+
+        # Format x-axis 
+        plt.grid(which = 'both', axis='x')
+        plt.grid(which = 'both', axis='y')
+        plt.gcf().autofmt_xdate()
+        
+        # Show the plot 
+        plt.show()
+
+    def add_electric_consumption_per_day(df: pd.DataFrame) -> pd.DataFrame:
+        df['Electric_usage'] = df.bookings_count * config.avg_electricity_consumption
+        return df
+    
+    def electric_per_day_visual(df: pd.DataFrame):
+        last_90_days_df = df.tail(90)
+        # Calculate the average electric consumption per day
+        average_electric_usage = last_90_days_df['Electric_usage'].mean()
+        # Create a plot
+        plt.figure(figsize=(10, 6))
+        plt.plot(last_90_days_df['date'], last_90_days_df['Electric_usage'], marker='o')
+        plt.axhline(y=average_electric_usage, color='r', linestyle='--', label='Average Electric Usage')
+        # Set labels and title
+        plt.xlabel('Date')
+        plt.ylabel('Electric Usage')
+        plt.title('Last 90 Days Average Electric Consumption per Day')
+        # Add legend
+        plt.legend()
+        # Show the plot
+        plt.show()
