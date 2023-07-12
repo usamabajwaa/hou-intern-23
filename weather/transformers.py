@@ -1,5 +1,8 @@
+from datetime import timedelta
 import os
 from dotenv import load_dotenv
+from matplotlib import pyplot as plt
+from matplotlib.ticker import AutoMinorLocator
 import pandas as pd
 import numpy as np
 import config 
@@ -63,4 +66,26 @@ class Transformers:
         df['water_usage'] = df.bookings_count * config.avg_water_consumption
         
         return df
+    def water_viz(df: pd.DataFrame):
+
+        #Sets up and autoscales the window to a larger size for readbabilit
+        fig = plt.figure(figsize=(20, 7), dpi=100)
+        ax = fig.subplots()
+    
+        ax.plot(df['date'], df['water_usage'], marker='o')
+        
+        xaxis_labels = list(np.arange(df['date'].min(), df['date'].max()+timedelta(days=1), 3))
+        xaxis_labels.append(df['date'].max())
+        ax.set_xticks(xaxis_labels)
+        
+
+        ax.set(xlabel = 'Date', ylabel = 'Avg Water Usage (Gallons)', title = 'Water Usage For Past 90 Days')
+
+        ax.xaxis.set_minor_locator(AutoMinorLocator(3))
+        #Displays grid and formats x-axis test
+        plt.grid(which = 'both', axis='x')
+        plt.grid(which = 'both', axis='y')
+        plt.gcf().autofmt_xdate()
+        
+        plt.show()
         
