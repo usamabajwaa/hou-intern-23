@@ -35,8 +35,7 @@ if __name__== "__main__":
     transformer_df = Transformers.group_bookings_data(transformer_df)
     transformer_df = Transformers.add_commute_emissions(transformer_df)
     transformer_df = Transformers.add_water_column(transformer_df)
-
-    print(transformer_df)
+    transformer_df = Transformers.water_viz(transformer_df)
 
     if verbose: 
         print(transformer_df)
